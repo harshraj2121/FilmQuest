@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* primary - #1f1e24
+secondry - #6556cd */
+
+
+html{
+    ::-webkit-scrollbar{
+        width: 8px;
+        height: 7px;
+    }
+    ::-webkit-scrollbar-track{
+       background: #1f1e24;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #6556cd;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+}
