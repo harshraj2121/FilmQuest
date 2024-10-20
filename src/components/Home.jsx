@@ -13,11 +13,11 @@ function Home() {
 
   const [wallpaper, setwallpaper] = useState(null)
   const [trending, setTrending] = useState(null)
-  const [category, setcategory] = useState("all")
+  const [category, setcategory] = useState("movie")
 
   const getHeaderWallpaper =  async () => {
     try {
-      const {data} = await axios.get(`/trending/all/day`);
+      const {data} = await axios.get(`/trending/movie/day`);
       let randomdata = data.results[(Math.random() * data.results.length).toFixed()];
       setwallpaper(randomdata)
     } catch (error) {
@@ -51,7 +51,7 @@ function Home() {
 
         <div className='p-6 flex justify-between'>
          <h1 className='text-3xl text-zinc-400 font-semibold'>Trending</h1>
-         <DropDown title="Filter" opt ={["tv", "movie", "all"]} func={(e) => setcategory(e.target.value)}/>
+         <DropDown title="Filter" opt ={["tv", "movie"]} func={(e) => setcategory(e.target.value)}/>
        </div>
 
         <Horozontalcards data={trending} />

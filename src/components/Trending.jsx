@@ -11,7 +11,7 @@ function Trending() {
 
   
   const navigate = useNavigate();
-  const [category, setcategory] = useState("all");
+  const [category, setcategory] = useState("movie");
   const [duration, setDuration] = useState("day");
   const [trending, setTrending] = useState([]);
   const [page, setPage] = useState(1);
@@ -61,7 +61,7 @@ function Trending() {
           <Topnav />
         </div>
         <div className="flex items-center justify-center gap-2">
-          <DropDown title="Trending" opt={["tv", "movie", "all"]} func={(e) => setcategory(e.target.value)} />
+          <DropDown title="Trending" opt={["tv", "movie"]} func={(e) => setcategory(e.target.value)} />
           <DropDown title="Duration" opt={["day", "week"]} func={(e) => setDuration(e.target.value)} />
         </div>
       </nav>
