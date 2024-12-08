@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { asyncloadmovie, removemovie } from '../store/actions/MovieActions';
 import Loading from './Loading'
+import Horozontalcards from './partials/Horozontalcards'
 
 function MovieDetails() {
-
-
-  const {pathname} = useLocation();
 
   const navigate = useNavigate();
   const {info} = useSelector(state => state.movie)
@@ -20,18 +18,18 @@ function MovieDetails() {
     return ()=> {
       diapatch(removemovie())
     }
-  }, [])
+  }, [id])
 
   return info ? (
     <div style={{
       background : `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(https://image.tmdb.org/t/p/original/${info.detail.backdrop_path})`,
-      backgroundPosition: 'top 10%',
+      backgroundPosition: 'center',
       backgroundSize: 'cover',
-      }} className='w-screen h-screen px-[10%]'>
+      }} className='h-[178vh] px-[10%] relative'>
       {/* div for adjusting maximum width */}
       <div className='h-screen max-w-screen-xl mx-auto px-5'>
         {/* part 1 navigation */}
-        <nav className='h-[7vh] w-full text-white flex items-center gap-[3%] text-xl'>
+        <nav className='h-[7vh] w-full text-white flex items-center gap-[3%] text-xl mb-5'>
           <Link title='Back' onClick={() => navigate(-1)} className="hover:text-[#6556cd] mr-4 ri-arrow-go-back-line pt-1"></Link>
           <a title='Home' href="/"><i className="ri-home-line"></i></a>
           <a title='MoviePage' target='_blank' href={info.detail.homepage}><i className='ri-external-link-fill'></i></a>
@@ -64,9 +62,9 @@ function MovieDetails() {
               <p className='text-white my-2 '>{info.detail.overview}</p>
 
               <h1 className='font-semibold text-xl text-white mt-3'>Movie Translated</h1>
-              <p className='text-white mt-2 mb-4 text-sm'>{info.translations.join(", ")}</p>
+              <p className='text-white mt-2 mb-4 text-sm'>{info.translations.join(", ").slice(0,45)}</p>
 
-              <Link to={`${pathname}/trailer`} className='text-white px-7 py-2 bg-[#6556cd] rounded-md font-semibold'>
+              <Link to={`trailer`} className='text-white px-7 py-2 bg-[#6556cd] rounded-md font-semibold'>
                 <i className="text-base ri-play-fill mr-3"></i>
                 Play Trailer
               </Link>
@@ -78,7 +76,7 @@ function MovieDetails() {
 
 
           {/* part 3 available on platforms */}
-          <div className='mt-[12vh] pl-0 p-3 w-[55%] text-white flex flex-col items-center justify-start gap-y-3 gap-2 object-fit'>
+          <div className='mt-[12vh] mb-8 pl-0 p-3 w-[55%] text-white flex flex-col items-center justify-start gap-y-3 gap-2 object-fit'>
             <div className='flex items-center justify-around w-full'>
               <span className='w-[40%] font-semibold text-xl'>Buy</span>
               <div className='flex items-center justify-start gap-2 w-[60%]'>
@@ -99,10 +97,20 @@ function MovieDetails() {
                 {info.watchproviders && info.watchproviders.rent ? (info.watchproviders.rent.map((w, index)=> <img title={w.provider_name} key={index} className='w-[5vh] rounded-md ' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} alt=''/>)) : <span>Unavailable</span>}
               </div>
             </div>
-
           </div>
+
+
+          {/* Part 4 recomendations and similar stuffs */}
+          <hr className='w-full'/>
+          <h1 className='mb-8 mt-3 text-3xl font-bold text-zinc-300'>Recomendations & Similar Stuffs</h1>
+          <Horozontalcards data={info.recommendations.length > 0 ? info.recommendations : info.similar}/>
         </div>
       </div>
+
+
+
+      
+      <Outlet/>
     </div>
   ) : <Loading />
 }
