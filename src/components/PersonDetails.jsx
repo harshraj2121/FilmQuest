@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { asyncloadperson, removeperson } from '../store/actions/personActions';
+import { asyncloadperson, removeperson } from '../store/actions/PersonActions';
 import Loading from './Loading'
 import Horozontalcards from './partials/Horozontalcards'
 
